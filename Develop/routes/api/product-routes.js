@@ -1,22 +1,44 @@
-const router = require('express').Router();
-const { Product, Category, Tag, ProductTag } = require('../../models');
+const router = require("express").Router();
+const { Product, Category, Tag, ProductTag, Product } = require("../../models");
 
 // The `/api/products` endpoint
 
 // get all products
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
+  try{
+    const Products = await Products.findAll({
+include: [{ model: Products, model: Tag.Data }]; //CHECK
+    });
+    res.status(200).json(Products);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // get one product
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  try {
+    const Product = await Products.findByPk(req.params.id, {
+      include: [{ model: Product.data }],
+    });
+
+    if (!Product) {
+      res.status(404).json({ message: "No Products found with that id!" });
+      return;
+    }
+
+    res.status(200).json(Product);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // create new product
-router.post('/', (req, res) => {
+router.post("/", (req, res) => {
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -48,7 +70,7 @@ router.post('/', (req, res) => {
 });
 
 // update product
-router.put('/:id', (req, res) => {
+router.put("/:id", (req, res) => {
   // update product data
   Product.update(req.body, {
     where: {
@@ -89,8 +111,24 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete("/:id", (req, res) => {
   // delete one product by its `id` value
+  try {
+    const Product= await Product.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!Product) {
+      res.status(404).json({ message: 'No Product found with that id!' });
+      return;
+    }
+
+    res.status(200).json(Product);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
