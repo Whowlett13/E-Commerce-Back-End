@@ -6,33 +6,22 @@ const ProductTag = require("./ProductTag");
 const sequelize = require("sequelize");
 
 // Products belongsTo Category
-Category.belongsTo(Category, {
-  foreignKey: "Products",
-  onDelete: "CASCADE",
+Product.belongsTo(Category, {
+  foreignKey: "category_id",
+  // onDelete: "CASCADE",
 });
+
 // Categories have many Products
 Category.hasMany(Product, {
-  foreignKey: "Category",
+  foreignKey: "category_id",
 });
 // Products belongToMany Tags (through ProductTag)
-Products = sequelize.define('Product', {
-  role: sequelize.STRING
-});
-Products.belongsToMany(Tags, {through: ProductTag});
-const Products = await Products.create({ id:   });
-await Tags.addProducts([project,   ]);
 
+Product.belongsToMany(Tag, { through: ProductTag, foreignKey: "product_id" });
 
-// Tags belongToMany Products (through ProductTag)
+// Tag belongToMany Products (through ProductTag)
 
-
-Tags = sequelize.define('ProductTag'{
-  role: sequelize.String
-});
-Tags.belongsToMany(Products,{through: ProductTag });
-const Tags = await Tags.create({ id: 11   });
-await Tags.addTag([Tag,   ]);
-
+Tag.belongsToMany(Product, { through: ProductTag, foreignKey: "tag_id" });
 
 module.exports = {
   Product,

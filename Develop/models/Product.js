@@ -1,7 +1,7 @@
 // import important parts of sequelize library
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes } = require("sequelize");
 // import our database connection from config.js
-const sequelize = require('../config/connection');
+const sequelize = require("../config/connection");
 
 // Initialize Product model (table) by extending off Sequelize's Model class
 class Product extends Model {}
@@ -11,62 +11,49 @@ Product.init(
   {
     // define columns* `Product`
 
-  id: {
-type: DATATYPES.INTEGER,
-allowNull: false,
-primaryKey: true,
-autoIncrement: true,
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
 
-  },
- 
+    product_name: {
+      type: DataTypes.STRING,
+      alowNull: false,
+    },
 
-  product_name: {
-type: DATATYPES.STRING,
-alowNull: false,
+    price: {
+      type: DataTypes.DECIMAL,
+      alowNull: false,
+      validate: {
+        isDecimal: true,
+      },
+    },
 
-  },
-  
-  
+    stock: {
+      type: DataTypes.INTEGER,
+      alowNull: false,
+      defaultValue: 10,
+      validate: {
+        isNumeric: true,
+      },
+    },
 
-  price: {
-    type: DATATYPES.DECIMAL,
-    alowNull: false,
-    validate:{
-isDecimal: true,
-    }
-  },
-  
-
-  stock:{
-type: DATATYPES.INTEGER,
-alowNull: false,
-defaultValue: 10,
-validate:{
-isNumeric: true,
-}
-
-  },
-  
-    
-
-  category_id: {
-type: DATATYPES.INTEGER,
-reference:{
-Category: 'model_id',
-
-
-},
-
-  }
-  
-   
+    category_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "category",
+        key: "id",
+      },
+    },
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'product',
+    modelName: "product",
   }
 );
 
