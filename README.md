@@ -20,12 +20,11 @@ A command-line application that dynamically
 
 ## link To Deployed Application:
 
-Link to Github Repo:
-Link to deployed link on Heroku:
+Link to Github Repo: https://github.com/Whowlett13/E-Commerce-Back-End
 
 ## ScreenShot of Deployed Application:
 
-Link:
+Link: [Untitled\_ May 9, 2023 4_53 PM (1).webm](https://github.com/Whowlett13/E-Commerce-Back-End/assets/116604140/9f1b3018-5764-4183-804c-8430bd294b41)
 
 ## Built With:
 
