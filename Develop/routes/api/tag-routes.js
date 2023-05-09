@@ -3,12 +3,30 @@ const { Tag, Product, ProductTag } = require("../../models");
 
 // The `/api/tags` endpoint
 
+// router.get("/", async (req, res) => {
+//   // find all tags
+//   // be sure to include its associated Product data
+//   try {
+//     const tags = await Tag.findAll({
+//       include: [{ product: data }],
+//     });
+//     res.status(200).json(tags);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+//   // console.log(err);
+//    });
 router.get("/", async (req, res) => {
   // find all tags
   // be sure to include its associated Product data
   try {
-    const tags = await Tags.findAll({
-      include: [{ product: data }],
+    const tags = await Tag.findAll({
+      include: [
+        {
+          model: Product,
+          through: ProductTag,
+        },
+      ],
     });
     res.status(200).json(tags);
   } catch (err) {
@@ -20,7 +38,7 @@ router.get("/:id", async (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
   try {
-    const tagId = await tag.findByPk(req.params.id, {
+    const tagId = await Tag.findByPk(req.params.id, {
       include: [{ Product: data }],
     });
 
@@ -38,7 +56,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   // create a new tag
   try {
-    const newTag = await tag.create({
+    const newTag = await Tag.create({
       tag_id: req.body.tag_id,
     });
     res.status(200).json(newTag);
