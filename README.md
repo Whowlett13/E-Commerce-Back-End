@@ -12,7 +12,7 @@
 
 ## Description Of Functionality:
 
-A command-line application that dynamically
+A command-line application that dynamically adds categories, products and tags to a database using node.js.
 
 ## Installation:
 
